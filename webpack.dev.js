@@ -6,7 +6,7 @@ module.exports = {
   entry: './index.tsx',
   output: {
     path: path.join(__dirname, '/lib'),
-    filename: 'index.tsx',
+    filename: 'index.js',
     library: 'WebChat',
     libraryTarget: 'umd'
   },
