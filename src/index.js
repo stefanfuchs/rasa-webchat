@@ -1,12 +1,12 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
+import * as PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
 
 import Widget from './components/Widget';
 import { store, initStore } from './store/store';
 import socket from './socket';
 
-const ConnectedWidget = (props: Props) => {
+const ConnectedWidget = (props) => {
   const sock = socket(props.socketUrl, props.customData, props.socketPath);
   const storage = props.params.storage == "session" ? sessionStorage : localStorage
   initStore(
@@ -16,7 +16,8 @@ const ConnectedWidget = (props: Props) => {
     storage,
     props.docViewer,
     );
-  return (<Provider store={store}>
+  return (
+    <Provider store={store}>
     <Widget
       socket={sock}
       interval={props.interval}
@@ -39,6 +40,7 @@ const ConnectedWidget = (props: Props) => {
   </Provider>);
 };
 
+/*
 type Props = {
   initPayload?: string,
   interval?: number,
@@ -61,6 +63,7 @@ type Props = {
   closeImage?: string,
   docViewer: boolean
 };
+*/
 
 ConnectedWidget.propTypes = {
   initPayload: PropTypes.string,

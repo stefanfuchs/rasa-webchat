@@ -44,5 +44,5 @@ module.exports = {
       }
     ]
   },
-  plugins: [new CleanWebpackPlugin(['lib'])]
+  plugins: [new CleanWebpackPlugin()]
 };
