@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { Widget, toggleChat, openChat, closeChat, showChat, hideChat, isOpen, isVisible } from './index_for_react_app';
 
