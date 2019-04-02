@@ -1,7 +1,9 @@
 /* eslint-disable no-undef */
-import React, { Component } from 'react';
+import * as React from 'react';
+import { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { Socket } from 'socket.io'
+// import * as PropTypes from 'prop-types';
 import {
   toggleChat,
   openChat,
@@ -17,16 +19,23 @@ import {
   connectServer,
   disconnectServer,
   pullSession
-} from 'actions';
+} from 'src/store/actions';
 
 import { isSnippet, isVideo, isImage, isQR, isText } from './msgProcessor';
 import WidgetLayout from './layout';
 import { storeLocalSession, getLocalSession } from '../../store/reducers/helper';
-import { SESSION_NAME, NEXT_MESSAGE } from 'constants';
+import { SESSION_NAME, NEXT_MESSAGE } from 'src/constants';
 
-class Widget extends Component {
+class Widget extends Component<Props> {
 
-  constructor(props) {
+  messages: string[] = []
+
+  defaultProps: Props = {
+    isChatOpen: false,
+    isChatVisible: true,
+  }
+
+  constructor(props: Props) {
     super(props);
     this.messages = [];
     setInterval(() => {
@@ -112,7 +121,7 @@ class Widget extends Component {
     const { storage } = this.props;
     // Get the local session, check if there is an existing session_id
     const localSession = getLocalSession(storage, SESSION_NAME);
-    const local_id = localSession? localSession.session_id: null;
+    const local_id = localSession ? localSession.session_id : null;
     return local_id;
   }
 
@@ -194,22 +203,22 @@ class Widget extends Component {
   render() {
     return (
       <WidgetLayout
-        toggleChat={this.toggleConversation}
-        onSendMessage={this.handleMessageSubmit}
-        title={this.props.title}
-        subtitle={this.props.subtitle}
-        customData={this.props.customData}
-        profileAvatar={this.props.profileAvatar}
-        showCloseButton={this.props.showCloseButton}
-        hideWhenNotConnected={this.props.hideWhenNotConnected}
-        fullScreenMode={this.props.fullScreenMode}
-        isChatOpen={this.props.isChatOpen}
-        isChatVisible={this.props.isChatVisible}
-        badge={this.props.badge}
-        embedded={this.props.embedded}
-        params={this.props.params}
-        openLauncherImage={this.props.openLauncherImage}
-        closeImage={this.props.closeImage}
+        toggleChat= { this.toggleConversation }
+    onSendMessage = { this.handleMessageSubmit }
+    title = { this.props.title }
+    subtitle = { this.props.subtitle }
+    customData = { this.props.customData }
+    profileAvatar = { this.props.profileAvatar }
+    showCloseButton = { this.props.showCloseButton }
+    hideWhenNotConnected = { this.props.hideWhenNotConnected }
+    fullScreenMode = { this.props.fullScreenMode }
+    isChatOpen = { this.props.isChatOpen }
+    isChatVisible = { this.props.isChatVisible }
+    badge = { this.props.badge }
+    embedded = { this.props.embedded }
+    params = { this.props.params }
+    openLauncherImage = { this.props.openLauncherImage }
+    closeImage = { this.props.closeImage }
       />
     );
   }
@@ -222,31 +231,53 @@ const mapStateToProps = state => ({
   isChatVisible: state.behavior.get('isChatVisible')
 });
 
-Widget.propTypes = {
-  interval: PropTypes.number,
-  title: PropTypes.string,
-  customData: PropTypes.shape({}),
-  subtitle: PropTypes.string,
-  initPayload: PropTypes.string,
-  profileAvatar: PropTypes.string,
-  showCloseButton: PropTypes.bool,
-  hideWhenNotConnected: PropTypes.bool,
-  fullScreenMode: PropTypes.bool,
-  isChatVisible: PropTypes.bool,
-  isChatOpen: PropTypes.bool,
-  badge: PropTypes.number,
-  socket: PropTypes.shape({}),
-  embedded: PropTypes.bool,
-  params: PropTypes.object,
-  connected: PropTypes.bool,
-  initialized: PropTypes.bool,
-  openLauncherImage: PropTypes.string,
-  closeImage: PropTypes.string
-};
+interface Props {
+  interval?: number,
+  title?: string,
+  customData?: any,
+  subtitle?: string,
+  initPayload?: string,
+  profileAvatar?: string,
+  showCloseButton?: boolean,
+  hideWhenNotConnected?: boolean,
+  fullScreenMode?: boolean,
+  isChatVisible?: boolean,
+  isChatOpen?: boolean,
+  badge?: number,
+  socket?: Socket,
+  embedded?: boolean,
+  params?: object,
+  connected?: boolean,
+  initialized?: boolean,
+  openLauncherImage?: string,
+  closeImage?: string
+}
 
-Widget.defaultProps = {
-  isChatOpen: false,
-  isChatVisible: true,
-};
+// Widget.propTypes = {
+//   interval: PropTypes.number,
+//   title: PropTypes.string,
+//   customData: PropTypes.shape({}),
+//   subtitle: PropTypes.string,
+//   initPayload: PropTypes.string,
+//   profileAvatar: PropTypes.string,
+//   showCloseButton: PropTypes.bool,
+//   hideWhenNotConnected: PropTypes.bool,
+//   fullScreenMode: PropTypes.bool,
+//   isChatVisible: PropTypes.bool,
+//   isChatOpen: PropTypes.bool,
+//   badge: PropTypes.number,
+//   socket: PropTypes.shape({}),
+//   embedded: PropTypes.bool,
+//   params: PropTypes.object,
+//   connected: PropTypes.bool,
+//   initialized: PropTypes.bool,
+//   openLauncherImage: PropTypes.string,
+//   closeImage: PropTypes.string
+// };
 
-export default connect(mapStateToProps)(Widget);
+// Widget.defaultProps = {
+//   isChatOpen: false,
+//   isChatVisible: true,
+// };
+
+export default connect<{}, {}, Props>(mapStateToProps)(Widget);
