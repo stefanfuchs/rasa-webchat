@@ -1,12 +1,12 @@
-import React from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
 
 import Widget from './components/Widget';
-import { store, initStore } from '../src/store/store';
+import { store, initStore } from './store/store';
 import socket from './socket';
 
-const ConnectedWidget = (props) => {
+const ConnectedWidget = (props: Props) => {
   const sock = socket(props.socketUrl, props.customData, props.socketPath);
   const storage = props.params.storage == "session" ? sessionStorage : localStorage
   initStore(
@@ -37,6 +37,29 @@ const ConnectedWidget = (props) => {
       closeImage={props.closeImage}
     />
   </Provider>);
+};
+
+type Props = {
+  initPayload?: string,
+  interval?: number,
+  title?: string,
+  subtitle?: string,
+  socketUrl: string,
+  socketPath?: string,
+  customData?: {},
+  handleNewUserMessage?: (...args: any) => any,
+  profileAvatar?: string,
+  inputTextFieldHint?: string,
+  connectingText?: string,
+  showCloseButton?: boolean,
+  hideWhenNotConnected?: boolean,
+  fullScreenMode?: boolean,
+  badge?: number,
+  embedded?: boolean,
+  params?: any,
+  openLauncherImage?: string,
+  closeImage?: string,
+  docViewer: boolean
 };
 
 ConnectedWidget.propTypes = {
