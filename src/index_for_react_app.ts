@@ -1,4 +1,4 @@
-import ConnectedWidget from './src';
+import ConnectedWidget from './components/Widget/ConnectedWidget';
 import {
   addUserMessage,
   addResponseMessage,
@@ -16,7 +16,7 @@ import {
   hideChat,
   toggleInputDisabled,
   dropMessages
-} from './src/store/actions/dispatcher';
+} from './store/actions/dispatcher';
 
 export {
   ConnectedWidget as Widget,

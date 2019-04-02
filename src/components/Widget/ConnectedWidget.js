@@ -2,9 +2,9 @@ import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
 
-import Widget from './components/Widget';
-import { store, initStore } from './store/store';
-import socket from './socket';
+import Widget from '.';
+import { store, initStore } from '../../store/store';
+import socket from '../../socket';
 
 const ConnectedWidget = (props) => {
   const sock = socket(props.socketUrl, props.customData, props.socketPath);
