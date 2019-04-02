@@ -34,6 +34,7 @@
     "uniqueid": "^1.0.0"
   },
   "devDependencies": {
+    "dotenv-webpack": "^1.7.0",
     "@babel/core": "^7.4.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.4.0",
     "@babel/preset-env": "^7.4.2",
